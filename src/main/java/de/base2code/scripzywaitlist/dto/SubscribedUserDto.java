@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.UUID;
+
 @Entity
 @Table(name = "users")
 @Getter
@@ -17,6 +19,8 @@ public class SubscribedUserDto {
     private String email;
 
     private String referral;
+    private boolean active = false;
+    private String token = UUID.randomUUID().toString();
 
     private long timestamp = System.currentTimeMillis();
 }

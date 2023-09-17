@@ -3,13 +3,12 @@ package de.base2code.scripzywaitlist.service;
 import de.base2code.scripzywaitlist.dto.SubscribedUserDto;
 import de.base2code.scripzywaitlist.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 @Slf4j
-public class EmailDatabase {
+public class UserDatabase {
     @Autowired
     private UserRepository userRepository;
 

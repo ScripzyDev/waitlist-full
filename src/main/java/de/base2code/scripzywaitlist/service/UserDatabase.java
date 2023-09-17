@@ -18,13 +18,21 @@ public class UserDatabase {
         return subscribedUserDto != null;
     }
 
-    public boolean addEmailToDatabase(String email, String referral) {
+    public SubscribedUserDto addEmailToDatabase(String email, String referral) {
         SubscribedUserDto user = new SubscribedUserDto();
         user.setEmail(email);
         user.setReferral(referral);
         userRepository.save(user);
         log.info("Added " + email + " to database with referral " + referral);
-        return true;
+        return user;
+    }
+
+    public SubscribedUserDto getUserByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
+    public void save(SubscribedUserDto user) {
+        userRepository.save(user);
     }
 
 }

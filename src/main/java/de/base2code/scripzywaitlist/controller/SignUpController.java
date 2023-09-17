@@ -1,19 +1,17 @@
 package de.base2code.scripzywaitlist.controller;
 
 import de.base2code.scripzywaitlist.common.exception.InvalidCaptchaException;
+import de.base2code.scripzywaitlist.dto.SubscribedUserDto;
 import de.base2code.scripzywaitlist.dto.UserDto;
 import de.base2code.scripzywaitlist.response.RecaptchaResponse;
 import de.base2code.scripzywaitlist.service.CaptchaService;
+import de.base2code.scripzywaitlist.service.TokenUrlGeneratorService;
 import de.base2code.scripzywaitlist.service.UserDatabase;
 import de.base2code.scripzywaitlist.service.EmailValidator;
 import de.base2code.scripzywaitlist.utils.MailClient;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.MailException;
-import org.springframework.mail.MailSender;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,6 +33,9 @@ public class SignUpController {
 
     @Autowired
     private SpringTemplateEngine templateEngine;
+
+    @Autowired
+    private TokenUrlGeneratorService tokenUrlGeneratorService;
 
     @RequestMapping("/signup")
     public String signup(@RequestParam(name="email", required=true) String email,
@@ -62,19 +63,24 @@ public class SignUpController {
                     return "index";
                 }
 
-                if (!userDatabase.addEmailToDatabase(userDTO.getEmail(), userDTO.getReferral())) {
+                SubscribedUserDto user = null;
+                try {
+                    user = userDatabase.addEmailToDatabase(userDTO.getEmail(), userDTO.getReferral());
+                } catch (Exception e) {
+                    e.printStackTrace();
                     model.addAttribute("error", "Es ist ein Fehler aufgetreten (-1)");
-                    log.info("Could not add email to database: " + userDTO.getEmail());
+                    log.info("Error while adding email to database: " + userDTO.getEmail() + "; " + e.getMessage());
                     return "index";
                 }
 
                 Context context = new Context();
                 context.setVariable("email", userDTO.getEmail());
+                context.setVariable("tokenUrl", tokenUrlGeneratorService.generateTokenUrl(user));
                 String body = templateEngine.process("email-confirm-mail", context);
                 mailClient.sendEmail(email, "Test", body);
 
                 model.addAttribute("email", userDTO.getEmail());
-                return "signup-ok";
+                return "actiavtion-email-sent";
             } else {
                 model.addAttribute("error", "Es ist ein Fehler aufgetreten (-2)");
                 log.info("General error: " + userDTO.getEmail());

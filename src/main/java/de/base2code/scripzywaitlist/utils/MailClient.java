@@ -64,7 +64,7 @@ public class MailClient {
             msg.setRecipients(Message.RecipientType.BCC, InternetAddress.parse("niklas@grenningloh.net", false));
 
             msg.addHeader("Content-Type", "text/html; charset=UTF-8");
-            log.info("Message is ready");
+            log.info("E-Mail Message is ready");
             Transport.send(msg);
 
             log.info("Email sent successfully to " + toEmail + " with subject " + subject);

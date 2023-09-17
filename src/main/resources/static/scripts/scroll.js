@@ -1,6 +1,6 @@
-const fadeInElements = document.querySelectorAll('.scale');
+const fadeInElements = document.querySelectorAll('.fade-in');
 
-window.addEventListener('scroll', checkVisibility());
+window.addEventListener('scroll', checkVisibility);
 
 const fadeInOptions = {
     rootMargin: "0px",

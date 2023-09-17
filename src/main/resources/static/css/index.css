@@ -9,10 +9,134 @@
     font-family: 'Montserrat', sans-serif;
 }
 
+/*** POPUPs */
+.popup-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    height: 100vh;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all .2s;
+    display: none;
+    opacity: 0;
+}
+
+.popup-container.toggle {
+    display: flex;
+    opacity: 1;
+}
+
+.popup {
+    position: relative;;
+    background-color: #fff;
+    width: 30%;
+    height: 50vh;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.popup-message-container {
+    height: 80%;
+    width: 100%;
+    padding: 0 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+}
+
+/** ERROR **/
+.error-icon {
+    width: 100px;
+    height: 100px;
+    background-color: rgb(252, 100, 100);
+    border-radius: 100%;
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.error-icon img {
+    width: 60px;
+    height: 60px;
+}
+
+.error-title {
+    color: rgb(252, 100, 100);
+    font-weight: 600;
+    font-size: 40px;
+    margin-bottom: 25px;
+}
+
+.error-message {
+    color: rgb(41, 41, 41);
+    font-size: 20px;
+}
+
+/** COOKIES **/
+.cookies-image {
+    height: 60px;
+    width: 60px;
+    margin-bottom: 30px;
+}
+
+.cookies-title {
+    color: rgb(43, 43, 43);
+    font-weight: 600;
+    font-size: 40px;
+    margin-bottom: 25px;
+}
+
+.cookies-message {
+    color: rgb(41, 41, 41);
+    font-size: 20px;
+}
+
+.popup-button {
+    width: 100%;
+    height: 20%;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0 0 10px 10px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.popup-button-red {
+    background-color: rgb(252, 100, 100);
+}
+
+.popup-button-gray {
+    background-color: rgb(170, 170, 170);
+}
+
+/*** END POPUPs */
+
 .section {
     width: 100%;
     min-height: 100vh;
     position: relative;
+}
+
+.fade-in {
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: all .4s;
+}
+
+.fade-in.show {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 /** Landing Page */
@@ -31,10 +155,10 @@
 }
 
 .spaceholder {
-    /*background-color: rgba(27, 21, 45, .8);
-    border: rgba(230, 207, 241, .2) 1px solid;*/
-    /*height: 20px; 80*/
-    /*border-radius: 50px;*/
+    background-color: rgba(27, 21, 45, .8);
+    border: rgba(230, 207, 241, .2) 1px solid;
+    height: 80px;
+    border-radius: 50px;
     width: 100%;
 
     margin: 100px auto;
@@ -44,6 +168,24 @@
     width: 100%;
     text-align: start;
     margin: 0 auto;
+    animation: move-In-Bottom .5s ease-in-out;
+}
+
+@keyframes move-In-Bottom {
+    0% {
+        opacity: 0;
+        transform: translateY(20%);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animated-subtitle {
+    animation: move-In-Left 0.3s ease-in-out 0.5s;
+    animation-fill-mode: backwards;
 }
 
 .subtitle {
@@ -65,6 +207,18 @@
     border-radius: 50px;
     border: rgba(230, 207, 241, .6) 1px solid;
     font-size: 20px;
+}
+
+@keyframes move-In-Left {
+    0% {
+        opacity: 0;
+        transform: translateX(-20%);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .inform-container input {
@@ -143,11 +297,11 @@
     .title {
         text-align: center;
     }
-    
+
     .subtitle {
         text-align: center;
     }
-    
+
     .inform-container {
         margin: 50px auto;
     }
@@ -227,8 +381,8 @@
     width: 90%;
     border-left: 2px solid #fff;
     border-bottom: 2px solid #fff;
-   /** background-image: linear-gradient(to right bottom, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), url(../images/chartbg.PNG);*/
-   background-color: #e2e0e0;
+    /** background-image: linear-gradient(to right bottom, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), url(../images/chartbg.PNG);*/
+    background-color: #e2e0e0;
     background-size: cover;
     background-position: top;
 }
@@ -269,7 +423,7 @@
 
 .value {
     position: relative;
-    width: 0;
+    width: 100%;
     height: 100px;
     background-color: #1B103A;
     transition: all .5s;
@@ -301,11 +455,6 @@
     content: "1";
 }
 
-.value.show {
-    width: 100%;
-    height: 100px;
-}
-
 .value:hover {
     background-color: #dadada
 }
@@ -325,16 +474,6 @@
     font-size: 55px;
     margin: 100px 0;
     font-weight: bold;
-}
-
-@keyframes scale {
-    0% {
-        width: 0%;
-    }
-
-    100% {
-        width: 100%;
-    }
 }
 
 @media screen and (max-width: 1300px) {
@@ -399,10 +538,10 @@
 .grid-image-container {
     position: relative;
     background-color: transparent;
-    /*border-radius: 200px;*/
+    border-radius: 200px;
     height: 400px;
-/*    border: rgba(230, 207, 241, .2) 2px solid;
-    box-shadow: inset 0px -20px rgba(230, 207, 241, .05);*/
+    border: rgba(230, 207, 241, .2) 2px solid;
+    box-shadow: inset 0px -20px rgba(230, 207, 241, .05);
     overflow: hidden;
 }
 
@@ -413,8 +552,8 @@
 
 #grid-image-stripes {
     position: absolute;
-    bottom: 40px;
-    left: 130px;
+    bottom: -10px;
+    left: -20px;
 }
 
 
@@ -451,7 +590,7 @@
     .row:not(:first-child) {
         margin-top: 100px;
     }
-    
+
 
     .grid-text {
         width: 70%;
@@ -472,7 +611,7 @@
     .grid-text h5 {
         font-size: 30px;
     }
-    
+
     .grid-text {
         font-size: 15px;
     }
@@ -585,7 +724,7 @@
 
 .instant-transition {
     transition: none;
-  }
+}
 
 .faq-box hr {
     border: none;
@@ -773,12 +912,12 @@
 }
 
 .footer-navigation-container div ul {
-   list-style: none;
+    list-style: none;
 }
 
 .footer-navigation-container div ul li {
     margin-bottom: 10px;
- }
+}
 
 .footer-navigation-container div ul li a {
     color: #E6CFF1;
@@ -843,7 +982,7 @@
         width: 90%;
     }
 
-    
+
     #footer-image-one {
         left: 7%;
     }
@@ -963,6 +1102,7 @@
     display: flex;
     flex-direction: column;
     position: relative;
+    overflow: hidden;
 }
 
 #questionmark {
@@ -970,17 +1110,17 @@
     top: 20%;
     left: 32%;
 }
-  
+
 .stripe-row {
     display: flex;
     flex-direction: row;
     margin-bottom: 10px;
 }
-  
+
 .stripe-row div:not(:last-child) {
     margin-right: 10px;
 }
-  
+
 div#stripes {
     border-radius:2px;
     height: 30px;
@@ -988,7 +1128,7 @@ div#stripes {
     background-image: linear-gradient(45deg, #3C15FC 25%, transparent 25%, transparent 50%, #3C15FC 50%, #3C15FC 75%, transparent 75%, rgba(255,255,255, 0));
     background-size: 10px 10px;
 }
-  
+
 div#empty {
     border-radius:5px;
     height: 30px;

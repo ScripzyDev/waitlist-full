@@ -35,28 +35,37 @@ public class SignUpController {
 
             if (response.isSuccess()) {
                 if (!new EmailValidator().isValid(userDTO.getEmail())) {
-                    model.addAttribute("error", "Invalid email");
+                    model.addAttribute("error", "Ungültige Email");
+                    log.info("Invalid email: " + userDTO.getEmail());
                     return "index";
                 }
 
                 if (new EmailDatabase().isEmailInDatabase(userDTO.getEmail())) {
-                    model.addAttribute("error", "Email already in database");
+                    model.addAttribute("error", "Du bist bereits auf der Warteliste");
+                    log.info("Email already in database: " + userDTO.getEmail());
                     return "index";
                 }
 
-                // TODO: Signup
+                if (!new EmailDatabase().addEmailToDatabase(userDTO.getEmail(), userDTO.getReferral())) {
+                    model.addAttribute("error", "Es ist ein Fehler aufgetreten (-1)");
+                    log.info("Could not add email to database: " + userDTO.getEmail());
+                    return "index";
+                }
 
                 model.addAttribute("email", userDTO.getEmail());
                 return "signup-ok";
             } else {
-                model.addAttribute("error", "general error");
+                model.addAttribute("error", "Es ist ein Fehler aufgetreten (-2)");
+                log.info("General error: " + userDTO.getEmail());
                 return "index";
             }
         } catch (InvalidCaptchaException exception) {
-            model.addAttribute("error", "Invalid captcha");
+            model.addAttribute("error", "Es ist ein Fehler aufgetreten (-3)");
+            log.info("Invalid captcha: " + userDTO.getEmail() + "; " + exception.getMessage());
             return "index";
         } catch (Exception exception) {
-            model.addAttribute("error", "Unknown error");
+            model.addAttribute("error", "Es ist ein Fehler aufgetreten (-4)");
+            log.info("Unknown error: " + userDTO.getEmail() + "; " + exception.getMessage());
             return "index";
         }
 

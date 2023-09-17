@@ -17,4 +17,13 @@ public class UserDto {
     private String recaptchaResponse;
 
     private String referral;
+
+    @Override
+    public String toString() {
+        return "UserDto{" +
+                "email='" + email + '\'' +
+                ", recaptchaResponse='" + recaptchaResponse + '\'' +
+                ", referral='" + referral + '\'' +
+                '}';
+    }
 }

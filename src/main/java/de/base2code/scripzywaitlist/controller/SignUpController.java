@@ -28,34 +28,36 @@ public class SignUpController {
         userDTO.setEmail(email);
         userDTO.setRecaptchaResponse(recaptchaResponse);
         userDTO.setReferral(referral);
+        System.out.println(userDTO);
 
         try {
             RecaptchaResponse response = captchaService.verify(userDTO.getRecaptchaResponse());
 
             if (response.isSuccess()) {
                 if (!new EmailValidator().isValid(userDTO.getEmail())) {
-                    model.addAttribute("reason", "Invalid email");
-                    return "signup-error";
+                    model.addAttribute("error", "Invalid email");
+                    return "index";
                 }
 
                 if (new EmailDatabase().isEmailInDatabase(userDTO.getEmail())) {
-                    model.addAttribute("reason", "Email already in database");
-                    return "signup-error";
+                    model.addAttribute("error", "Email already in database");
+                    return "index";
                 }
 
                 // TODO: Signup
 
+                model.addAttribute("email", userDTO.getEmail());
                 return "signup-ok";
             } else {
-                model.addAttribute("reason", "general error");
-                return "signup-error";
+                model.addAttribute("error", "general error");
+                return "index";
             }
         } catch (InvalidCaptchaException exception) {
-            model.addAttribute("reason", "Invalid captcha");
-            return "signup-error";
+            model.addAttribute("error", "Invalid captcha");
+            return "index";
         } catch (Exception exception) {
-            model.addAttribute("reason", "Reason");
-            return "signup-error";
+            model.addAttribute("error", "Unknown error");
+            return "index";
         }
 
 

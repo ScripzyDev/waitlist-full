@@ -1,14 +1,30 @@
 package de.base2code.scripzywaitlist.service;
 
+import de.base2code.scripzywaitlist.dto.SubscribedUserDto;
+import de.base2code.scripzywaitlist.repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.catalina.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+@Slf4j
 public class EmailDatabase {
+    @Autowired
+    private UserRepository userRepository;
 
     public boolean isEmailInDatabase(String email) {
-        System.out.println("Checked if " + email + " is in database");
-        return false;
+        // Use userRepository to check if email is already in database
+        SubscribedUserDto subscribedUserDto = userRepository.findByEmail(email);
+        return subscribedUserDto != null;
     }
 
     public boolean addEmailToDatabase(String email, String referral) {
-        System.out.println("Added " + email + " to database with referral " + referral);
+        SubscribedUserDto user = new SubscribedUserDto();
+        user.setEmail(email);
+        user.setReferral(referral);
+        userRepository.save(user);
+        log.info("Added " + email + " to database with referral " + referral);
         return true;
     }
 

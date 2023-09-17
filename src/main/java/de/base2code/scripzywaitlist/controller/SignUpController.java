@@ -9,6 +9,7 @@ import de.base2code.scripzywaitlist.service.EmailDatabase;
 import de.base2code.scripzywaitlist.service.EmailValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +20,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class SignUpController {
     private final CaptchaService captchaService;
+
+    @Autowired
+    private EmailDatabase emailDatabase;
 
     @RequestMapping("/signup")
     public String signup(@RequestParam(name="email", required=true) String email,
@@ -40,13 +44,13 @@ public class SignUpController {
                     return "index";
                 }
 
-                if (new EmailDatabase().isEmailInDatabase(userDTO.getEmail())) {
+                if (emailDatabase.isEmailInDatabase(userDTO.getEmail())) {
                     model.addAttribute("error", "Du bist bereits auf der Warteliste");
                     log.info("Email already in database: " + userDTO.getEmail());
                     return "index";
                 }
 
-                if (!new EmailDatabase().addEmailToDatabase(userDTO.getEmail(), userDTO.getReferral())) {
+                if (!emailDatabase.addEmailToDatabase(userDTO.getEmail(), userDTO.getReferral())) {
                     model.addAttribute("error", "Es ist ein Fehler aufgetreten (-1)");
                     log.info("Could not add email to database: " + userDTO.getEmail());
                     return "index";
@@ -64,6 +68,7 @@ public class SignUpController {
             log.info("Invalid captcha: " + userDTO.getEmail() + "; " + exception.getMessage());
             return "index";
         } catch (Exception exception) {
+            exception.printStackTrace();
             model.addAttribute("error", "Es ist ein Fehler aufgetreten (-4)");
             log.info("Unknown error: " + userDTO.getEmail() + "; " + exception.getMessage());
             return "index";

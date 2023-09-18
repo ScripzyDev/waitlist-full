@@ -51,7 +51,7 @@ public class TokenController {
 
         Context context = new Context();
         context.setVariable("email", user.getEmail());
-        String body = templateEngine.process("email-activated", context);
+        String body = templateEngine.process("actiavtion-email-sent", context);
         mailClient.sendEmail(email, "Test", body);
 
         model.addAttribute("email", email);

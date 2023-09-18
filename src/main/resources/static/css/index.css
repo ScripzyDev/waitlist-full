@@ -160,8 +160,8 @@
     height: 80px;
     border-radius: 50px;
     width: 100%;
-
     margin: 100px auto;
+    visibility: hidden;
 }
 
 .title {

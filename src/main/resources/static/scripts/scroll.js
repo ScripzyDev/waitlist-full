@@ -26,7 +26,7 @@ function checkVisibility() {
     fadeInElements.forEach((element) => {
         const elementTop = element.getBoundingClientRect().top;
         const elementBottom = element.getBoundingClientRect().bottom;
-    
+
         // If the element is in the viewport, add the "is-visible" class
         if (elementTop < window.innerHeight && elementBottom > 0) {
             element.classList.add('show');

@@ -49,11 +49,6 @@ public class TokenController {
         user.setActive(true);
         userDatabase.save(user);
 
-        Context context = new Context();
-        context.setVariable("email", user.getEmail());
-        String body = templateEngine.process("actiavtion-email-sent", context);
-        mailClient.sendEmail(email, "Test", body);
-
         model.addAttribute("email", email);
         return "verify-successful";
     }

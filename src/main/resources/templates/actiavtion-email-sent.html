@@ -1,10 +1,77 @@
-<!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html lang="de">
+
 <head>
-    <title>Getting Started: Serving Web Content</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/signup.css">
+    <link rel="icon" href="../images/icon.png">
+
+    <title>Scripzy</title>
+
+    <!-- Chart.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+
+    <!-- Icons -->
+    <script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
+
 <body>
-<p th:text="'Hello, ' + ${email} + '!'" />
+<div class="popup-container" id="error-container">
+    <div class="popup">
+        <div class="popup-message-container">
+            <div class="error-icon">
+                <img src="../images/error-icon.png" alt="ERROR">
+            </div>
+            <div class="error-title">FEHLER</div>
+            <div class="error-message"><p id="error-message"></p></div>
+        </div>
+        <div class="popup-button popup-button-red" onclick="togglePopup('error-container')">
+            Verstanden
+        </div>
+    </div>
+</div>
+
+<div class="popup-container" id="cookies-container">
+    <div class="popup">
+        <div class="popup-message-container">
+            <img src="../images/cookie.png" alt="COOKIES" class="cookies-image">
+            <div class="cookies-title">Cookies</div>
+            <div class="cookies-message"><p id="cookies-message">Um unsere Webseite benutzen zu können, musst du unsere Cookies akzeptieren.</p></div>
+        </div>
+        <div class="popup-button popup-button-gray" onclick="togglePopup('cookies-container')">
+            Akzeptieren
+        </div>
+    </div>
+</div>
+
+<div class="content">
+    <div class="content-container">
+        <div class="icon-container">
+            <img src="../images/add-user.png" alt="Icon">
+        </div>
+        <div class="title">
+            <h2>Danke fürs Registrieren</h2>
+        </div>
+        <div class="text">
+            <h3>Großartig, du hast dich erfolgreich für die Warteliste registriert! <br>
+                Wir sind begeistert, dass du Interesse an unserer Idee hast.
+                <br>Bald erhältst du eine Bestätigungs-E-Mail, in der du deine Adresse verifizieren kannst.
+                <br>Das ist wichtig, damit wir dich über alle Updates informieren können. Bleib also dran!</h3>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script src="../scripts/index.js"></script>
+<script src="../scripts/scroll.js"></script>
 </body>
+
 </html>

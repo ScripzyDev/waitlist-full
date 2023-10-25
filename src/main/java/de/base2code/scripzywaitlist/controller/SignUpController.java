@@ -77,7 +77,7 @@ public class SignUpController {
                 context.setVariable("email", userDTO.getEmail());
                 context.setVariable("tokenUrl", tokenUrlGeneratorService.generateTokenUrl(user));
                 String body = templateEngine.process("email-confirm-mail", context);
-                mailClient.sendEmail(email, "Test", body);
+                mailClient.sendEmail(email, "Aktiviere deine E-Mail", body);
 
                 model.addAttribute("email", userDTO.getEmail());
                 return "actiavtion-email-sent";

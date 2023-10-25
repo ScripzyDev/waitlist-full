@@ -11,9 +11,7 @@ function togglePopup(name) {
     if(errorContainer.classList.contains("toggle")) {
         errorContainer.classList.remove("toggle");
         document.body.style.overflow = "inherit";
-        if (name === "error-container") {
-            window.location.href = "/";
-        }
+        window.location.href = "/";
     } else {
         errorContainer.classList.add("toggle");
         document.body.style.overflow = "hidden";

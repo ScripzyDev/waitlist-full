@@ -51,7 +51,7 @@ public class MailClient {
             //set message headers
             msg.addHeader("Content-Transfer-Encoding", "8bit");
 
-            msg.setFrom(new InternetAddress(fromEmail, "Skripzy"));
+            msg.setFrom(new InternetAddress(fromEmail, "Scripzy"));
 
             msg.setReplyTo(InternetAddress.parse(fromEmail, false));
 
